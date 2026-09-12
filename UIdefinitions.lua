@@ -822,7 +822,12 @@ function localizeApHint(_hint, _center)
 			if G.localization.descriptions.Other["ap_locked_" .. _center.set] then
 				for i = 1, #G.localization.descriptions.Other["ap_locked_" .. _center.set].nonlocal do
 					local _string = G.localization.descriptions.Other["ap_locked_" .. _center.set].nonlocal[i]
-					_string = string.gsub(_string, "#1#", G.AP.player_names[_hint.finding_player])
+					local player_name = G.AP.player_names[_hint.finding_player]
+					if type(player_name) == "string" then
+						_string = string.gsub(_string, "#1#", player_name)
+					else
+						_string = "Saved your ass from crash!"
+					end
 					target_text[#target_text+1] = loc_parse_string(_string)
 				end
 			end
